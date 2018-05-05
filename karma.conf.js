@@ -36,9 +36,9 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
+    //autoWatch: true,
     browsers: ['ChromeNoSandbox'],
-    singleRun: false,
+    singleRun: true,
     junitReporter: {
       outputDir: process.env.JUNIT_REPORT_PATH,
       outputFile: process.env.JUNIT_REPORT_NAME,
@@ -46,7 +46,7 @@ module.exports = function (config) {
     },
     customLaunchers: {
       ChromeNoSandbox: {
-        base: 'Chrome',
+        base: 'ChromeHeadless',
         flags: ['--no-sandbox']
       }
     }

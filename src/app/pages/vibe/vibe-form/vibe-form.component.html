@@ -1,0 +1,15 @@
+<form novalidate class="form-horizontal" [formGroup]="form">
+	<ion-item *ngIf="base64Image">
+		<img src="{{base64Image}}"/>
+	</ion-item>
+  	<ion-item>
+    	<ion-label color="primary">Tagline</ion-label>
+    	<ion-input placeholder="Best thing to buy ever" 
+    			formControlName="tagline"
+    			(input)="onChanged()"></ion-input>
+  	</ion-item>
+  	<ion-item>
+  		<button ion-button (click)="onSnap()">Snap</button>
+  		<button *ngIf="base64Image" ion-button (click)="onSubmit()">Submit</button>
+  	</ion-item>
+</form>
