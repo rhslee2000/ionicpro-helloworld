@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-vibe-form',
@@ -8,44 +7,28 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 })
 export class VibeFormComponent implements OnInit {
 
-	private options: CameraOptions;
-
-	private base64Image: string;
+	@Output()
+	submit = new EventEmitter<FormGroup>();
 
 	form = this.fb.group({
-		tagline: ['']
+		title: ['', Validators.required],
+		comment: [''],
+		rating: [0, '']
 	});
 	
-	constructor(private fb: FormBuilder, private camera: Camera) { }
+	constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-	  this.options = {
-		  quality: 50,
-		  destinationType: this.camera.DestinationType.DATA_URL,
-		  encodingType: this.camera.EncodingType.JPEG,
-		  mediaType: this.camera.MediaType.PICTURE,
-		  correctOrientation: true
-	  }
   }
-
-  onChanged() {
-	  console.log('login' + this.form.value.tagline);
-  }
-
-	onSnap() {
-		this.camera.getPicture(this.options).then((imageData) => {
-			// imageData is either a base64 encoded string or a file URI
-			// If it's base64:
-			this.base64Image = 'data:image/jpeg;base64,' + imageData;
-			console.log(this.base64Image);
-		}, (err) => {
-			// Handle error
-			console.log('Failed to take photo:', err);
-		});
-	}
 
 	onSubmit() {
-		console.log('submit');
+		let invalid = this.form.invalid;
+		if (invalid) {
+			console.log('form is invalid!');
+			return;
+		}
+		console.log('submit', this.form.value);
+		this.submit.emit(this.form.value);
 	}
 
 }

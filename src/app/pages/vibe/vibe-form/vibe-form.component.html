@@ -1,15 +1,22 @@
 <form novalidate class="form-horizontal" [formGroup]="form">
-	<ion-item *ngIf="base64Image">
-		<img src="{{base64Image}}"/>
-	</ion-item>
+  <ion-item>
+    <ion-label color="primary" stacked>What are you reviewing?</ion-label>
+    <ion-input placeholder="title" 
+          formControlName="title"></ion-input>
+  </ion-item>
+  <ion-item>
+     <ion-label color="primary">Rating</ion-label>
+     <ion-range min="-5" max="5" step="1" snaps="true" formControlName="rating">
+       <ion-icon range-left name="thumbs-down"></ion-icon>
+       <ion-icon range-right name="thumbs-up"></ion-icon>
+     </ion-range>
+   </ion-item>
   	<ion-item>
-    	<ion-label color="primary">Tagline</ion-label>
-    	<ion-input placeholder="Best thing to buy ever" 
-    			formControlName="tagline"
-    			(input)="onChanged()"></ion-input>
+    	<ion-label color="primary" stacked>Comments</ion-label>
+    	<ion-textarea placeholder="enter more details here" 
+    			formControlName="comment"></ion-textarea>
   	</ion-item>
   	<ion-item>
-  		<button ion-button (click)="onSnap()">Snap</button>
-  		<button *ngIf="base64Image" ion-button (click)="onSubmit()">Submit</button>
+  		<button ion-button (click)="onSubmit()">Submit</button>
   	</ion-item>
 </form>
